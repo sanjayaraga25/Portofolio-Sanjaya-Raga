@@ -1,4 +1,4 @@
-<section id="projects" class="py-xxl" x-data="{ selectedProject: null, loading: true }">
+<section id="projects" class="py-xxl" x-data="{ selectedProject: null, loading: true, activeFilter: 'all' }">
     <div class="container-portfolio">
         <div class="text-center mb-16">
             <h2 class="section-title mb-4 reveal">
@@ -8,6 +8,23 @@
                 A collection of projects I've worked on
             </p>
         </div>
+
+        @if ($projectCategories->count() > 0)
+        <div class="flex flex-wrap justify-center gap-3 mb-10 reveal">
+            <button @click="activeFilter = 'all'"
+                class="px-5 py-2 rounded-full text-sm font-medium transition-all"
+                :class="activeFilter === 'all' ? 'bg-tertiary text-primary shadow-lg shadow-tertiary/25' : 'bg-white/5 text-secondary hover:bg-white/10'">
+                All
+            </button>
+            @foreach ($projectCategories as $cat)
+            <button @click="activeFilter = '{{ $cat }}'"
+                class="px-5 py-2 rounded-full text-sm font-medium transition-all"
+                :class="activeFilter === '{{ $cat }}' ? 'bg-tertiary text-primary shadow-lg shadow-tertiary/25' : 'bg-white/5 text-secondary hover:bg-white/10'">
+                {{ $cat }}
+            </button>
+            @endforeach
+        </div>
+        @endif
 
         <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6" x-init="setTimeout(() => loading = false, 300)">
             <template x-if="loading">
@@ -24,7 +41,7 @@
             </template>
 
             @forelse ($projects as $project)
-                <div class="reveal" style="transition-delay: {{ $loop->iteration * 120 }}ms" x-show="!loading" x-transition>
+                <div class="reveal" style="transition-delay: {{ $loop->iteration * 120 }}ms" x-show="!loading && (activeFilter === 'all' || activeFilter === '{{ $project->category }}')" x-transition>
                     <x-project-card :project="$project" @click="selectedProject = {{ $project->id }}" />
                 </div>
             @empty
@@ -62,6 +79,11 @@
                         @endif
                     </div>
 
+                    @if ($project->category)
+                        <span class="inline-block text-xs font-medium text-tertiary bg-tertiary/10 px-3 py-1 rounded-full mb-3">
+                            {{ $project->category }}
+                        </span>
+                    @endif
                     <h3 class="text-2xl font-display font-bold mb-2">{{ $project->title }}</h3>
                     <p class="text-secondary leading-relaxed mb-6">{{ $project->description }}</p>
 

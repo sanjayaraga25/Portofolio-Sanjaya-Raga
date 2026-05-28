@@ -20,6 +20,11 @@
     </div>
 
     <div class="p-6">
+        @if ($project->category)
+            <span class="inline-block text-xs font-medium text-tertiary bg-tertiary/10 px-3 py-1 rounded-full mb-3">
+                {{ $project->category }}
+            </span>
+        @endif
         <h3 class="text-xl font-display font-semibold mb-2 group-hover:text-tertiary transition-colors">
             {{ $project->title }}
         </h3>

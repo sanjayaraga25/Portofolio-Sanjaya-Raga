@@ -20,6 +20,7 @@
                 <thead>
                     <tr class="border-b border-border/50 bg-surface/50 sticky top-0 z-10">
                         <th class="text-left px-6 py-4 font-medium text-secondary text-xs uppercase tracking-wider">Title</th>
+                        <th class="text-left px-6 py-4 font-medium text-secondary text-xs uppercase tracking-wider">Category</th>
                         <th class="text-left px-6 py-4 font-medium text-secondary text-xs uppercase tracking-wider">Status</th>
                         <th class="text-left px-6 py-4 font-medium text-secondary text-xs uppercase tracking-wider">Created</th>
                         <th class="text-right px-6 py-4 font-medium text-secondary text-xs uppercase tracking-wider">Actions</th>
@@ -31,6 +32,15 @@
                             <td class="px-6 py-4">
                                 <p class="font-medium">{{ $project->title }}</p>
                                 <p class="text-secondary text-xs mt-0.5 truncate max-w-xs">{{ $project->description }}</p>
+                            </td>
+                            <td class="px-6 py-4">
+                                @if ($project->category)
+                                    <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-medium bg-tertiary/10 text-tertiary">
+                                        {{ $project->category }}
+                                    </span>
+                                @else
+                                    <span class="text-secondary text-xs">—</span>
+                                @endif
                             </td>
                             <td class="px-6 py-4">
                                 <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-medium bg-tertiary/10 text-tertiary">
@@ -52,7 +62,7 @@
                         </tr>
                     @empty
                         <tr>
-                            <td colspan="4" class="px-6 py-16 text-center text-secondary">No projects yet.</td>
+                            <td colspan="5" class="px-6 py-16 text-center text-secondary">No projects yet.</td>
                         </tr>
                     @endforelse
                 </tbody>

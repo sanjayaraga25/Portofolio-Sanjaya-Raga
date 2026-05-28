@@ -24,11 +24,12 @@ class PortfolioService
             'organizations' => Experience::where('type', 'organization')->latest('start_date')->get(),
             'services' => Service::all(),
             'skillCategories' => $categoryOrder,
+            'projectCategories' => Project::where('status', 'active')->whereNotNull('category')->distinct()->pluck('category'),
         ];
     }
 
     public function getProjectCategories(): array
     {
-        return Project::where('status', 'active')->get()->pluck('title')->toArray();
+        return Project::where('status', 'active')->whereNotNull('category')->distinct()->pluck('category')->toArray();
     }
 }

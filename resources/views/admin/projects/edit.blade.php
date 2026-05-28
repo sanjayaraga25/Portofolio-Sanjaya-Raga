@@ -29,6 +29,13 @@
                 @error('description') <p class="text-danger text-sm mt-1">{{ $message }}</p> @enderror
             </div>
 
+            <div>
+                <label class="block text-sm font-medium mb-2">Category</label>
+                <input type="text" name="category" value="{{ old('category', $project->category) }}" placeholder="e.g. IT, Video Editing, Data Science"
+                    class="input-field @error('category') border-danger @enderror">
+                @error('category') <p class="text-danger text-sm mt-1">{{ $message }}</p> @enderror
+            </div>
+
             <div class="grid grid-cols-2 gap-6">
                 <div>
                     <label class="block text-sm font-medium mb-2">GitHub URL</label>
@@ -45,7 +52,7 @@
             </div>
 
             <div>
-                <label class="block text-sm font-medium mb-2">Video URL (YouTube) — pengganti thumbnail</label>
+                <label class="block text-sm font-medium mb-2">Video URL (YouTube) ï¿½ pengganti thumbnail</label>
                 <input type="url" name="video_url" value="{{ old('video_url', $project->video_url) }}"
                     class="input-field @error('video_url') border-danger @enderror">
                 @error('video_url') <p class="text-danger text-sm mt-1">{{ $message }}</p> @enderror

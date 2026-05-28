@@ -15,6 +15,7 @@ class Project extends Model
         'title',
         'slug',
         'description',
+        'category',
         'thumbnail',
         'video_url',
         'github_url',

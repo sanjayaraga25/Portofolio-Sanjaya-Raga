@@ -57,19 +57,19 @@ class PortfolioSeeder extends Seeder
 
         Project::firstOrCreate(
             ['slug' => 'emotion-detection-indobertweet-bilstm'],
-            ['title' => 'Emotion Detection Using IndoBERTweet-BiLSTM', 'description' => 'Developed a multilabel NLP model for emotion and hate speech detection. Combined IndoBERTweet with BiLSTM architecture. Integrated the model into a web-based opinion analysis platform.', 'thumbnail' => null, 'github_url' => null, 'demo_url' => null, 'status' => 'active']
+            ['title' => 'Emotion Detection Using IndoBERTweet-BiLSTM', 'description' => 'Developed a multilabel NLP model for emotion and hate speech detection. Combined IndoBERTweet with BiLSTM architecture. Integrated the model into a web-based opinion analysis platform.', 'category' => 'Data Science', 'thumbnail' => null, 'github_url' => null, 'demo_url' => null, 'status' => 'active']
         );
         Project::firstOrCreate(
             ['slug' => 'smart-parking-car'],
-            ['title' => 'Smart Parking Car', 'description' => 'Built an IoT-based smart parking monitoring system. Integrated sensors for real-time parking detection.', 'thumbnail' => null, 'github_url' => null, 'demo_url' => null, 'status' => 'active']
+            ['title' => 'Smart Parking Car', 'description' => 'Built an IoT-based smart parking monitoring system. Integrated sensors for real-time parking detection.', 'category' => 'IoT', 'thumbnail' => null, 'github_url' => null, 'demo_url' => null, 'status' => 'active']
         );
         Project::firstOrCreate(
             ['slug' => 'smart-cat-feeding'],
-            ['title' => 'Smart Cat Feeding', 'description' => 'Developed an automated cat feeding system integrated with Google Assistant.', 'thumbnail' => null, 'github_url' => null, 'demo_url' => null, 'status' => 'active']
+            ['title' => 'Smart Cat Feeding', 'description' => 'Developed an automated cat feeding system integrated with Google Assistant.', 'category' => 'IoT', 'thumbnail' => null, 'github_url' => null, 'demo_url' => null, 'status' => 'active']
         );
         Project::firstOrCreate(
             ['slug' => 'astra-quest-ar-game'],
-            ['title' => 'Astra Quest AR Game', 'description' => 'Developed an Augmented Reality educational game using Unity. Converted learning cards into interactive 3D objects.', 'thumbnail' => null, 'github_url' => null, 'demo_url' => null, 'status' => 'active']
+            ['title' => 'Astra Quest AR Game', 'description' => 'Developed an Augmented Reality educational game using Unity. Converted learning cards into interactive 3D objects.', 'category' => 'Game Development', 'thumbnail' => null, 'github_url' => null, 'demo_url' => null, 'status' => 'active']
         );
 
         Service::firstOrCreate(['title' => 'Data Analysis & Visualization'], ['description' => 'Process and analyze data to generate actionable business insights. Build interactive data visualizations using Python, SQL, and various analytical tools.', 'icon' => 'code']);
