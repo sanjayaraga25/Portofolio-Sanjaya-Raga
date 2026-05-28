@@ -19,14 +19,18 @@
                 </div>
 
                 <p class="text-secondary text-lg leading-relaxed reveal" style="transition-delay: 0.1s">
-                    I am an Informatics graduate from Institut Teknologi Nasional Bandung with a strong passion for Data Analysis, Machine Learning, and technology-driven problem solving.
+                    I am an Informatics graduate from Institut Teknologi Nasional Bandung with a strong passion for Data Analysis, Machine Learning, and technology-driven innovation. I enjoy transforming complex data into meaningful insights and building digital solutions that create real impact.
                 </p>
 
                 <p class="text-secondary text-lg leading-relaxed reveal" style="transition-delay: 0.2s">
-                    I have experience in data processing, system analysis, IT troubleshooting, and developing NLP-based machine learning models using IndoBERTweet-BiLSTM. I am a fast learner, analytical thinker, team-oriented individual, and highly interested in building impactful digital solutions through technology and data.
+                    My experience spans across data processing, system analysis, IT support, multimedia production, and AI development. I have worked on various projects ranging from NLP-based emotion detection using IndoBERTweet-BiLSTM, IoT systems, Augmented Reality applications, to live streaming production management.
                 </p>
 
-                <div class="flex flex-wrap gap-6 pt-4 reveal" style="transition-delay: 0.3s">
+                <p class="text-secondary text-lg leading-relaxed reveal" style="transition-delay: 0.3s">
+                    Beyond technical skills, I am recognized as a fast learner, analytical thinker, and collaborative team player who thrives in dynamic environments. I am highly motivated to continuously grow, explore new technologies, and contribute to impactful projects through creativity, problem solving, and data-driven approaches.
+                </p>
+
+                <div class="flex flex-wrap gap-6 pt-4 reveal" style="transition-delay: 0.4s">
                     <div class="text-center">
                         <div class="text-3xl font-display font-bold gradient-text">
                             <span class="animate-counter" data-target="4">0</span>
