@@ -45,6 +45,13 @@
             </div>
 
             <div>
+                <label class="block text-sm font-medium mb-2">Video URL (YouTube) — pengganti thumbnail</label>
+                <input type="url" name="video_url" value="{{ old('video_url', $project->video_url) }}"
+                    class="input-field @error('video_url') border-danger @enderror">
+                @error('video_url') <p class="text-danger text-sm mt-1">{{ $message }}</p> @enderror
+            </div>
+
+            <div>
                 <label class="block text-sm font-medium mb-2">Status</label>
                 <select name="status" class="input-field @error('status') border-danger @enderror">
                     <option value="completed" {{ (old('status', $project->status)) === 'completed' ? 'selected' : '' }}>Completed</option>

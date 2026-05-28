@@ -4,7 +4,7 @@
             <div class="orb w-72 h-72 bg-tertiary/10 absolute -top-32 -left-32"></div>
             <div class="orb w-96 h-96 bg-accent/10 absolute -bottom-48 -right-32"></div>
 
-            <div class="relative z-10">
+            <div class="relative z-10 text-center">
                 <h2 class="section-title mb-4">
                     Let's Work <span class="gradient-text">Together</span>
                 </h2>
