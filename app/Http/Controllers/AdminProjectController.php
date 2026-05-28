@@ -1,0 +1,78 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Models\Project;
+use Illuminate\Http\Request;
+use Illuminate\Support\Str;
+
+class AdminProjectController extends Controller
+{
+    public function index()
+    {
+        $projects = Project::latest()->paginate(10);
+
+        return view('admin.projects.index', compact('projects'));
+    }
+
+    public function create()
+    {
+        return view('admin.projects.create');
+    }
+
+    public function store(Request $request)
+    {
+        $validated = $request->validate([
+            'title' => ['required', 'string', 'max:255'],
+            'description' => ['nullable', 'string'],
+            'thumbnail' => ['nullable', 'image', 'mimes:jpg,jpeg,png,webp', 'max:2048'],
+            'github_url' => ['nullable', 'url', 'max:255'],
+            'demo_url' => ['nullable', 'url', 'max:255'],
+            'status' => ['required', 'string', 'in:active,inactive'],
+        ]);
+
+        $validated['slug'] = Str::slug($validated['title']);
+
+        if ($request->hasFile('thumbnail')) {
+            $validated['thumbnail'] = $request->file('thumbnail')->store('projects', 'public');
+        }
+
+        Project::create($validated);
+
+        return redirect()->route('admin.projects.index')->with('success', 'Project berhasil ditambahkan.');
+    }
+
+    public function edit(Project $project)
+    {
+        return view('admin.projects.edit', compact('project'));
+    }
+
+    public function update(Request $request, Project $project)
+    {
+        $validated = $request->validate([
+            'title' => ['required', 'string', 'max:255'],
+            'description' => ['nullable', 'string'],
+            'thumbnail' => ['nullable', 'image', 'mimes:jpg,jpeg,png,webp', 'max:2048'],
+            'github_url' => ['nullable', 'url', 'max:255'],
+            'demo_url' => ['nullable', 'url', 'max:255'],
+            'status' => ['required', 'string', 'in:active,inactive'],
+        ]);
+
+        $validated['slug'] = Str::slug($validated['title']);
+
+        if ($request->hasFile('thumbnail')) {
+            $validated['thumbnail'] = $request->file('thumbnail')->store('projects', 'public');
+        }
+
+        $project->update($validated);
+
+        return redirect()->route('admin.projects.index')->with('success', 'Project berhasil diupdate.');
+    }
+
+    public function destroy(Project $project)
+    {
+        $project->delete();
+
+        return redirect()->route('admin.projects.index')->with('success', 'Project berhasil dihapus.');
+    }
+}
