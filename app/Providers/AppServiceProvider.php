@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Models\User;
 use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\RateLimiter;
@@ -22,5 +23,10 @@ class AppServiceProvider extends ServiceProvider
         RateLimiter::for('contact', function (Request $request) {
             return Limit::perMinute(3)->by($request->ip());
         });
+
+        if (!app()->runningInConsole() && !User::count()) {
+            $this->call(\Database\Seeders\AdminUserSeeder::class);
+            $this->call(\Database\Seeders\PortfolioSeeder::class);
+        }
     }
 }
