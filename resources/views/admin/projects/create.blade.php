@@ -54,9 +54,9 @@
             <div>
                 <label class="block text-sm font-medium mb-2">Status</label>
                 <select name="status" class="input-field @error('status') border-danger @enderror">
-                    <option value="completed" {{ old('status') === 'completed' ? 'selected' : '' }}>Completed</option>
-                    <option value="in-progress" {{ old('status') === 'in-progress' ? 'selected' : '' }}>In Progress</option>
-                    <option value="archived" {{ old('status') === 'archived' ? 'selected' : '' }}>Archived</option>
+                    <option value="active" {{ old("status") === "active" ? "selected" : "" }}>Active</option>
+                    <option value="inactive" {{ old("status") === "inactive" ? "selected" : "" }}>Inactive</option>
+                    
                 </select>
                 @error('status') <p class="text-danger text-sm mt-1">{{ $message }}</p> @enderror
             </div>
