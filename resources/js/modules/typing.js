@@ -3,8 +3,8 @@ export default function initTyping() {
     const wordEl = document.getElementById('typingText');
     if (!wordEl) return;
 
-    const prefix = "An IT graduate who loves ";
-    const words = ['Data Analysis', 'Machine Learning', 'Building Solutions', 'Creating Impact'];
+    const prefix = "Passionate about ";
+    const words = ['Modern UI', 'Data Analysis', 'Machine Learning', 'UI/UX Design', 'Building Solutions'];
     let state = prefixEl ? 'prefix' : 'words';
     let prefixIndex = 0;
     let wordIndex = 0;
