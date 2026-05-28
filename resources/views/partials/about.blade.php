@@ -1,18 +1,16 @@
 <section id="about" class="py-xxl">
     <div class="container-portfolio">
         <div class="grid md:grid-cols-2 gap-12 items-center">
-            <div class="flex justify-center md:justify-start reveal-left">
-                <div class="relative">
+                        <div class="flex justify-center md:justify-start reveal-left">
+                <div class="relative group">
                     <div class="orb w-48 h-48 bg-accent/10 absolute -top-6 -left-6 blur-[80px]"></div>
-                    <div class="w-72 h-72 rounded-xl overflow-hidden glass p-2 group" x-data>
-                        <div class="w-full h-full rounded-lg bg-gradient-to-br from-tertiary/20 to-accent/20 flex items-center justify-center relative overflow-hidden">
-                            <div class="absolute inset-0 bg-gradient-to-br from-tertiary/30 to-accent/30 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-                            <svg class="w-24 h-24 text-tertiary/50 group-hover:text-tertiary/70 group-hover:scale-110 transition-all duration-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+                    <div class="w-72 h-72 rounded-xl overflow-hidden glass p-2">
+                        <div class="w-full h-full rounded-lg overflow-hidden">
+                            <img src="{{ asset('assets/images/profile.png') }}" alt="Sanjaya Raga Weninggalih" class="w-full h-full object-cover">
                         </div>
                     </div>
                 </div>
             </div>
-
             <div class="space-y-6" x-data>
                 <div class="reveal" x-intersect="$el.classList.add('visible')">
                     <h2 class="section-title">
