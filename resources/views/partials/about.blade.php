@@ -6,7 +6,7 @@
                     <div class="orb w-48 h-48 bg-accent/10 absolute -top-6 -left-6 blur-[80px]"></div>
                     <div class="w-72 h-72 rounded-xl overflow-hidden glass p-2">
                         <div class="w-full h-full rounded-lg overflow-hidden">
-                            <img src="{{ asset('assets/images/profile.png') }}" alt="Sanjaya Raga Weninggalih" class="w-full h-full object-cover">
+                            <img src="{{ asset('assets/images/g2.jpg') }}" alt="Sanjaya Raga Weninggalih" class="w-full h-full object-cover">
                         </div>
                     </div>
                 </div>
