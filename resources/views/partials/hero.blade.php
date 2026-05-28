@@ -74,7 +74,7 @@
                         <div class="text-center">
                             <p class="text-primary text-xl font-display font-bold leading-tight">Sanjaya Raga</p>
                             <p class="text-primary text-xl font-display font-bold leading-tight">Weninggalih</p>
-                            <p class="text-tertiary text-sm font-medium mt-2">Informatics Graduate</p>
+                            <p class="text-tertiary text-sm font-medium mt-2">Code. Data. Create.</p>
                         </div>
                     </div>
                 </div>
