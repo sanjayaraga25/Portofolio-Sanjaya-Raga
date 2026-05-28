@@ -9,10 +9,12 @@ class AdminUserSeeder extends Seeder
 {
     public function run(): void
     {
-        User::create([
-            'name' => 'Admin Portfolio',
-            'email' => 'admin@portfolio.com',
-            'password' => bcrypt('password'),
-        ]);
+        User::updateOrCreate(
+            ['email' => 'admin@portfolio.com'],
+            [
+                'name' => 'Admin Portfolio',
+                'password' => bcrypt('password'),
+            ]
+        );
     }
 }
