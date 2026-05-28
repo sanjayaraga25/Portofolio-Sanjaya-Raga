@@ -11,7 +11,7 @@ class PortfolioService
 {
     public function getHomeData(): array
     {
-        $categoryOrder = ['Programming & Data', 'Tools', 'Other Skills'];
+        $categoryOrder = Skill::distinct()->pluck('category')->toArray();
         $skills = Skill::all()->sortBy(function ($skill) use ($categoryOrder) {
             $idx = array_search($skill->category, $categoryOrder);
             return $idx !== false ? $idx : 99;
