@@ -28,7 +28,7 @@
             </h1>
 
             <p class="text-xl md:text-2xl text-secondary reveal" style="transition-delay: 0.2s">
-                <span id="typingText" class="text-primary font-medium"></span>
+                <span id="typingPrefix" class="text-primary font-medium"></span><span id="typingText" class="text-tertiary font-medium"></span>
                 <span class="inline-block w-0.5 h-6 bg-tertiary ml-1 animate-pulse align-middle"></span>
             </p>
 

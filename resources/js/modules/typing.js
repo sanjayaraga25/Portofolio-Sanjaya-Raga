@@ -1,8 +1,12 @@
 export default function initTyping() {
-    const el = document.getElementById('typingText');
-    if (!el) return;
+    const prefixEl = document.getElementById('typingPrefix');
+    const wordEl = document.getElementById('typingText');
+    if (!wordEl) return;
 
-    const words = ['Web Applications', 'Modern UI', 'APIs', 'Digital Experiences'];
+    const prefix = "An IT graduate who loves ";
+    const words = ['Data Analysis', 'Machine Learning', 'Building Solutions', 'Creating Impact'];
+    let state = prefixEl ? 'prefix' : 'words';
+    let prefixIndex = 0;
     let wordIndex = 0;
     let charIndex = 0;
     let isDeleting = false;
@@ -15,13 +19,26 @@ export default function initTyping() {
             return;
         }
 
+        if (state === 'prefix' && prefixEl) {
+            if (!isDeleting) {
+                prefixEl.textContent = prefix.substring(0, prefixIndex + 1);
+                prefixIndex++;
+                if (prefixIndex === prefix.length) {
+                    setTimeout(() => { state = 'words'; type(); }, 400);
+                    return;
+                }
+                setTimeout(type, 60);
+            }
+            return;
+        }
+
         const currentWord = words[wordIndex];
 
         if (isDeleting) {
-            el.textContent = currentWord.substring(0, charIndex - 1);
+            wordEl.textContent = currentWord.substring(0, charIndex - 1);
             charIndex--;
         } else {
-            el.textContent = currentWord.substring(0, charIndex + 1);
+            wordEl.textContent = currentWord.substring(0, charIndex + 1);
             charIndex++;
         }
 
