@@ -1,0 +1,11 @@
+{
+    "build": {
+        "builder": "NIXPACKS",
+        "buildCommand": "rm -f .env && composer install --no-dev && npm install && npm run build"
+    },
+    "deploy": {
+        "startCommand": "php artisan migrate --force && php -S 0.0.0.0:\"$PORT\" -t public",
+        "healthcheckPath": "/up",
+        "restartPolicyType": "on_failure"
+    }
+}
