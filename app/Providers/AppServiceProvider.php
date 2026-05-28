@@ -5,6 +5,7 @@ namespace App\Providers;
 use App\Models\User;
 use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Pagination\Paginator;
@@ -25,8 +26,7 @@ class AppServiceProvider extends ServiceProvider
         });
 
         if (!app()->runningInConsole() && !User::count()) {
-            $this->call(\Database\Seeders\AdminUserSeeder::class);
-            $this->call(\Database\Seeders\PortfolioSeeder::class);
+            Artisan::call('db:seed');
         }
     }
 }
