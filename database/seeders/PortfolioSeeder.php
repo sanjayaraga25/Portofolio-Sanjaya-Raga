@@ -12,6 +12,10 @@ class PortfolioSeeder extends Seeder
 {
     public function run(): void
     {
+        if (Project::count() > 0) {
+            return;
+        }
+
         Skill::firstOrCreate(['name' => 'Python'], ['category' => 'Programming & Data', 'percentage' => null, 'icon' => null]);
         Skill::firstOrCreate(['name' => 'SQL'], ['category' => 'Programming & Data', 'percentage' => null, 'icon' => null]);
         Skill::firstOrCreate(['name' => 'Data Analysis'], ['category' => 'Programming & Data', 'percentage' => null, 'icon' => null]);
