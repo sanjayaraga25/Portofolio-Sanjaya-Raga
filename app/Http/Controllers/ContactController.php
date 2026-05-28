@@ -15,10 +15,6 @@ class ContactController extends Controller
     {
         $this->contactService->store($request->validated());
 
-        if ($request->wantsJson()) {
-            return response()->json(['message' => 'Pesan berhasil dikirim!']);
-        }
-
-        return redirect()->back()->with('success', 'Pesan berhasil dikirim!');
+        return response()->json(['message' => 'Pesan berhasil dikirim!']);
     }
 }
