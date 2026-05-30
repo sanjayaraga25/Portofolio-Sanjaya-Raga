@@ -404,6 +404,49 @@
         background: rgba(139, 92, 246, 0.08);
     }
 
+    .skills-marquee {
+        overflow: hidden;
+        mask-image: linear-gradient(to right, transparent, black 8%, black 92%, transparent);
+        -webkit-mask-image: linear-gradient(to right, transparent, black 8%, black 92%, transparent);
+    }
+
+    .skills-marquee-inner {
+        display: flex;
+        gap: 16px;
+        animation: marquee var(--marquee-duration, 25s) linear infinite;
+        padding: 4px 0;
+        width: max-content;
+    }
+
+    .skills-marquee-inner:hover {
+        animation-play-state: paused;
+    }
+
+    .skill-chip {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        padding: 12px 24px;
+        border-radius: 999px;
+        background: rgba(255, 255, 255, 0.04);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        color: #9CA3AF;
+        font-size: 0.9rem;
+        font-weight: 500;
+        white-space: nowrap;
+        transition: all 0.35s ease;
+        flex-shrink: 0;
+        user-select: none;
+    }
+
+    .skill-chip:hover {
+        border-color: rgba(139, 92, 246, 0.3);
+        color: #F5F7FF;
+        background: rgba(139, 92, 246, 0.08);
+        box-shadow: 0 0 25px rgba(139, 92, 246, 0.45);
+        transform: translateY(-2px);
+    }
+
     .back-to-top-ring {
         position: relative;
     }
