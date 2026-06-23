@@ -3,16 +3,16 @@
 namespace App\Http\Controllers;
 
 use App\Models\Project;
+use CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
 class AdminProjectController extends Controller
 {
-    private function storageDisk(): string
+    private function isCloudinaryConfigured(): bool
     {
-        return config('filesystems.disks.cloudinary.cloud') ? 'cloudinary' : 'public';
+        return (bool) config('filesystems.disks.cloudinary.cloud');
     }
 
     public function index()
@@ -44,7 +44,12 @@ class AdminProjectController extends Controller
 
         if ($request->hasFile('thumbnail')) {
             try {
-                $validated['thumbnail'] = $request->file('thumbnail')->store('/', $this->storageDisk());
+                $file = $request->file('thumbnail');
+                $upload = Cloudinary::upload($file->getRealPath(), [
+                    'public_id' => Str::random(40),
+                    'resource_type' => 'image',
+                ]);
+                $validated['thumbnail'] = $upload->getSecurePath();
             } catch (\Throwable $e) {
                 Log::error('Thumbnail upload failed: ' . $e->getMessage(), ['exception' => $e]);
             }
@@ -77,10 +82,14 @@ class AdminProjectController extends Controller
 
         if ($request->hasFile('thumbnail')) {
             try {
-                if ($project->thumbnail) {
-                    Storage::disk($this->storageDisk())->delete($project->thumbnail);
-                }
-                $validated['thumbnail'] = $request->file('thumbnail')->store('/', $this->storageDisk());
+                $this->deleteThumbnailFromCloudinary($project->thumbnail);
+
+                $file = $request->file('thumbnail');
+                $upload = Cloudinary::upload($file->getRealPath(), [
+                    'public_id' => Str::random(40),
+                    'resource_type' => 'image',
+                ]);
+                $validated['thumbnail'] = $upload->getSecurePath();
             } catch (\Throwable $e) {
                 Log::error('Thumbnail update failed: ' . $e->getMessage(), ['exception' => $e]);
             }
@@ -94,9 +103,7 @@ class AdminProjectController extends Controller
     public function destroy(Project $project)
     {
         try {
-            if ($project->thumbnail) {
-                Storage::disk($this->storageDisk())->delete($project->thumbnail);
-            }
+            $this->deleteThumbnailFromCloudinary($project->thumbnail);
         } catch (\Throwable $e) {
             Log::error('Thumbnail delete failed: ' . $e->getMessage(), ['exception' => $e]);
         }
@@ -104,5 +111,18 @@ class AdminProjectController extends Controller
         $project->delete();
 
         return redirect()->route('admin.projects.index')->with('success', 'Project berhasil dihapus.');
+    }
+
+    private function deleteThumbnailFromCloudinary(?string $thumbnail): void
+    {
+        if (!$thumbnail || !$this->isCloudinaryConfigured()) {
+            return;
+        }
+
+        if (str_contains($thumbnail, 'res.cloudinary.com')) {
+            $path = parse_url($thumbnail, PHP_URL_PATH);
+            $publicId = pathinfo($path, PATHINFO_FILENAME);
+            Cloudinary::destroy($publicId);
+        }
     }
 }

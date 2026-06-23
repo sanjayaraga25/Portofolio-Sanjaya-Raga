@@ -29,10 +29,8 @@ class Project extends Model
             return null;
         }
 
-        $cloudName = config('filesystems.disks.cloudinary.cloud');
-        if ($cloudName) {
-            $publicId = pathinfo($this->thumbnail, PATHINFO_FILENAME);
-            return "https://res.cloudinary.com/{$cloudName}/image/upload/{$publicId}";
+        if (str_starts_with($this->thumbnail, 'http')) {
+            return $this->thumbnail;
         }
 
         return asset('storage/' . $this->thumbnail);
