@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Project;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
 class AdminProjectController extends Controller
@@ -36,7 +37,7 @@ class AdminProjectController extends Controller
         $validated['slug'] = Str::slug($validated['title']);
 
         if ($request->hasFile('thumbnail')) {
-            $validated['thumbnail'] = $request->file('thumbnail')->store('projects', 'public');
+            $validated['thumbnail'] = $request->file('thumbnail')->store('/', 'cloudinary');
         }
 
         Project::create($validated);
@@ -65,7 +66,10 @@ class AdminProjectController extends Controller
         $validated['slug'] = Str::slug($validated['title']);
 
         if ($request->hasFile('thumbnail')) {
-            $validated['thumbnail'] = $request->file('thumbnail')->store('projects', 'public');
+            if ($project->thumbnail) {
+                Storage::disk('cloudinary')->delete($project->thumbnail);
+            }
+            $validated['thumbnail'] = $request->file('thumbnail')->store('/', 'cloudinary');
         }
 
         $project->update($validated);
@@ -75,6 +79,10 @@ class AdminProjectController extends Controller
 
     public function destroy(Project $project)
     {
+        if ($project->thumbnail) {
+            Storage::disk('cloudinary')->delete($project->thumbnail);
+        }
+
         $project->delete();
 
         return redirect()->route('admin.projects.index')->with('success', 'Project berhasil dihapus.');
