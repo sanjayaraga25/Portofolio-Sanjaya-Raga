@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Project;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
@@ -11,7 +12,7 @@ class AdminProjectController extends Controller
 {
     private function storageDisk(): string
     {
-        return env('CLOUDINARY_CLOUD_NAME') ? 'cloudinary' : 'public';
+        return config('filesystems.disks.cloudinary.cloud') ? 'cloudinary' : 'public';
     }
 
     public function index()
@@ -42,7 +43,11 @@ class AdminProjectController extends Controller
         $validated['slug'] = Str::slug($validated['title']);
 
         if ($request->hasFile('thumbnail')) {
-            $validated['thumbnail'] = $request->file('thumbnail')->store('/', $this->storageDisk());
+            try {
+                $validated['thumbnail'] = $request->file('thumbnail')->store('/', $this->storageDisk());
+            } catch (\Throwable $e) {
+                Log::error('Thumbnail upload failed: ' . $e->getMessage(), ['exception' => $e]);
+            }
         }
 
         Project::create($validated);
@@ -71,10 +76,14 @@ class AdminProjectController extends Controller
         $validated['slug'] = Str::slug($validated['title']);
 
         if ($request->hasFile('thumbnail')) {
-            if ($project->thumbnail) {
-                Storage::disk($this->storageDisk())->delete($project->thumbnail);
+            try {
+                if ($project->thumbnail) {
+                    Storage::disk($this->storageDisk())->delete($project->thumbnail);
+                }
+                $validated['thumbnail'] = $request->file('thumbnail')->store('/', $this->storageDisk());
+            } catch (\Throwable $e) {
+                Log::error('Thumbnail update failed: ' . $e->getMessage(), ['exception' => $e]);
             }
-            $validated['thumbnail'] = $request->file('thumbnail')->store('/', $this->storageDisk());
         }
 
         $project->update($validated);
@@ -84,8 +93,12 @@ class AdminProjectController extends Controller
 
     public function destroy(Project $project)
     {
-        if ($project->thumbnail) {
-            Storage::disk($this->storageDisk())->delete($project->thumbnail);
+        try {
+            if ($project->thumbnail) {
+                Storage::disk($this->storageDisk())->delete($project->thumbnail);
+            }
+        } catch (\Throwable $e) {
+            Log::error('Thumbnail delete failed: ' . $e->getMessage(), ['exception' => $e]);
         }
 
         $project->delete();
