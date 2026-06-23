@@ -9,6 +9,11 @@ use Illuminate\Support\Str;
 
 class AdminProjectController extends Controller
 {
+    private function storageDisk(): string
+    {
+        return env('CLOUDINARY_CLOUD_NAME') ? 'cloudinary' : 'public';
+    }
+
     public function index()
     {
         $projects = Project::latest()->paginate(10);
@@ -37,7 +42,7 @@ class AdminProjectController extends Controller
         $validated['slug'] = Str::slug($validated['title']);
 
         if ($request->hasFile('thumbnail')) {
-            $validated['thumbnail'] = $request->file('thumbnail')->store('/', 'cloudinary');
+            $validated['thumbnail'] = $request->file('thumbnail')->store('/', $this->storageDisk());
         }
 
         Project::create($validated);
@@ -66,10 +71,10 @@ class AdminProjectController extends Controller
         $validated['slug'] = Str::slug($validated['title']);
 
         if ($request->hasFile('thumbnail')) {
-            if ($project->thumbnail && env('CLOUDINARY_CLOUD_NAME')) {
-                Storage::disk('cloudinary')->delete($project->thumbnail);
+            if ($project->thumbnail) {
+                Storage::disk($this->storageDisk())->delete($project->thumbnail);
             }
-            $validated['thumbnail'] = $request->file('thumbnail')->store('/', 'cloudinary');
+            $validated['thumbnail'] = $request->file('thumbnail')->store('/', $this->storageDisk());
         }
 
         $project->update($validated);
@@ -79,8 +84,8 @@ class AdminProjectController extends Controller
 
     public function destroy(Project $project)
     {
-        if ($project->thumbnail && env('CLOUDINARY_CLOUD_NAME')) {
-            Storage::disk('cloudinary')->delete($project->thumbnail);
+        if ($project->thumbnail) {
+            Storage::disk($this->storageDisk())->delete($project->thumbnail);
         }
 
         $project->delete();
