@@ -45,11 +45,11 @@ class AdminProjectController extends Controller
         if ($request->hasFile('thumbnail')) {
             try {
                 $file = $request->file('thumbnail');
-                $upload = Cloudinary::upload($file->getRealPath(), [
+                $result = Cloudinary::uploadApi()->upload($file->getRealPath(), [
                     'public_id' => Str::random(40),
                     'resource_type' => 'image',
                 ]);
-                $validated['thumbnail'] = $upload->getSecurePath();
+                $validated['thumbnail'] = $result['secure_url'];
             } catch (\Throwable $e) {
                 Log::error('Thumbnail upload failed: ' . $e->getMessage(), ['exception' => $e]);
             }
@@ -85,11 +85,11 @@ class AdminProjectController extends Controller
                 $this->deleteThumbnailFromCloudinary($project->thumbnail);
 
                 $file = $request->file('thumbnail');
-                $upload = Cloudinary::upload($file->getRealPath(), [
+                $result = Cloudinary::uploadApi()->upload($file->getRealPath(), [
                     'public_id' => Str::random(40),
                     'resource_type' => 'image',
                 ]);
-                $validated['thumbnail'] = $upload->getSecurePath();
+                $validated['thumbnail'] = $result['secure_url'];
             } catch (\Throwable $e) {
                 Log::error('Thumbnail update failed: ' . $e->getMessage(), ['exception' => $e]);
             }
@@ -122,7 +122,7 @@ class AdminProjectController extends Controller
         if (str_contains($thumbnail, 'res.cloudinary.com')) {
             $path = parse_url($thumbnail, PHP_URL_PATH);
             $publicId = pathinfo($path, PATHINFO_FILENAME);
-            Cloudinary::destroy($publicId);
+            Cloudinary::uploadApi()->destroy($publicId);
         }
     }
 }
