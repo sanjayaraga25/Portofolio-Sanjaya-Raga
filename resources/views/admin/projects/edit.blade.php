@@ -72,7 +72,7 @@
                 <label class="block text-sm font-medium mb-2">Thumbnail</label>
                 @if ($project->thumbnail)
                     <div class="mb-3">
-                        <img src="{{ Storage::disk('cloudinary')->url($project->thumbnail) }}" class="h-32 rounded-lg object-cover">
+                        <img src="{{ $project->thumbnail_url }}" class="h-32 rounded-lg object-cover">
                     </div>
                 @endif
                 <input type="file" name="thumbnail" accept="image/*"

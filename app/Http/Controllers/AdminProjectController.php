@@ -66,7 +66,7 @@ class AdminProjectController extends Controller
         $validated['slug'] = Str::slug($validated['title']);
 
         if ($request->hasFile('thumbnail')) {
-            if ($project->thumbnail) {
+            if ($project->thumbnail && env('CLOUDINARY_CLOUD_NAME')) {
                 Storage::disk('cloudinary')->delete($project->thumbnail);
             }
             $validated['thumbnail'] = $request->file('thumbnail')->store('/', 'cloudinary');
@@ -79,7 +79,7 @@ class AdminProjectController extends Controller
 
     public function destroy(Project $project)
     {
-        if ($project->thumbnail) {
+        if ($project->thumbnail && env('CLOUDINARY_CLOUD_NAME')) {
             Storage::disk('cloudinary')->delete($project->thumbnail);
         }
 

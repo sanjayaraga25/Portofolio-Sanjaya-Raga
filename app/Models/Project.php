@@ -5,6 +5,7 @@ namespace App\Models;
 use Database\Factories\ProjectFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Storage;
 
 class Project extends Model
 {
@@ -22,6 +23,19 @@ class Project extends Model
         'demo_url',
         'status',
     ];
+
+    public function getThumbnailUrlAttribute(): ?string
+    {
+        if (!$this->thumbnail) {
+            return null;
+        }
+
+        if (env('CLOUDINARY_CLOUD_NAME')) {
+            return Storage::disk('cloudinary')->url($this->thumbnail);
+        }
+
+        return Storage::disk('public')->url($this->thumbnail);
+    }
 
     public function getYoutubeEmbedAttribute(): ?string
     {
