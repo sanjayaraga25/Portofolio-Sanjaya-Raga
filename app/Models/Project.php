@@ -5,7 +5,6 @@ namespace App\Models;
 use Database\Factories\ProjectFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\Storage;
 
 class Project extends Model
 {
@@ -30,11 +29,13 @@ class Project extends Model
             return null;
         }
 
-        if (env('CLOUDINARY_CLOUD_NAME')) {
-            return Storage::disk('cloudinary')->url($this->thumbnail);
+        $cloudName = config('filesystems.disks.cloudinary.cloud');
+        if ($cloudName) {
+            $publicId = pathinfo($this->thumbnail, PATHINFO_FILENAME);
+            return "https://res.cloudinary.com/{$cloudName}/image/upload/{$publicId}";
         }
 
-        return Storage::disk('public')->url($this->thumbnail);
+        return asset('storage/' . $this->thumbnail);
     }
 
     public function getYoutubeEmbedAttribute(): ?string
